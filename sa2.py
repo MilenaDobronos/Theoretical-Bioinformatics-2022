@@ -23,32 +23,32 @@ for i in range(n):
     array[i] = s[i][0] # сделали одномерный массив индексов
 
 
-def bisect_left(array, query, seq, lo=0, hi=None):
-    if lo < 0:
+def bisect_left(array, p, t, left=0, right=None):
+    if left < 0:
         raise ValueError('должен быть неотрицательным')
-    if hi is None: #по умолчанию правая граница это последний элемент
-        hi = len(array)
-    while lo < hi: 
-        mid = (lo+hi)//2 #середина отрезка
-        if seq[array[mid]:] < query: # двигаем правую либо левую границу
-            lo = mid+1
+    if right is None: # по умолчанию правая граница это последний элемент
+        right = len(array)
+    while left < right: 
+        mid = (left+right)//2 # середина отрезка
+        if t[array[mid]:] < p: # двигаем правую либо левую границу
+            left = mid+1
         else:
-            hi = mid
+            right = mid
 
-    def match_at(i):
-        return seq[i: i + len(query)] == query
+    def match_at(i): # проверяет совпадения на i-месте
+        return t[i: i + len(p)] == p
 
-    if not match_at(array[lo]):
+    if not match_at(array[left]):
         raise IndexError('индексы закончились')
 
-    # array[lo] это первое вхождение
+    # array[left] это первое вхождение
     # теперь идем назад чтобы найти все вхождения
-    first = lo
+    first = left
     while first > 0 and match_at(array[first - 1]):
         first -= 1
 
     # и двигаемся вправо чтобы найти последнее
-    last = lo
+    last = left
     while match_at(array[last]):
         last += 1
     
