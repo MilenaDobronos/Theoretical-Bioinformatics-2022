@@ -12,8 +12,8 @@ n = len(t)
 s = [[0] * 2 for _ in range(n)] # генерируем двумерный массив из нулей
 
 for i in range(n):
-    s[i][0] = i # в первый столбец номера 0 1 2 3 и тд
-    s[i][1] = t[i:] # во второй суффиксы
+    s[i][0] = i # в первый вносим столбец номера 0 1 2 3 и тд
+    s[i][1] = t[i:] # во второй вносим суффиксы
 
 s.sort(key=lambda arr: arr[1]) # сортируем лексико-графически
 
@@ -25,12 +25,12 @@ for i in range(n):
 
 def bisect_left(array, query, seq, lo=0, hi=None):
     if lo < 0:
-        raise ValueError('must be non-negative')
+        raise ValueError('должен быть неотрицательным')
     if hi is None: #по умолчанию правая граница это последний элемент
         hi = len(array)
     while lo < hi: 
         mid = (lo+hi)//2 #середина отрезка
-        if seq[array[mid]:] < query: # двигаем левую либо правую границу
+        if seq[array[mid]:] < query: # двигаем правую либо левую границу
             lo = mid+1
         else:
             hi = mid
@@ -39,10 +39,10 @@ def bisect_left(array, query, seq, lo=0, hi=None):
         return seq[i: i + len(query)] == query
 
     if not match_at(array[lo]):
-        raise IndexError('there is not any index for the query')
+        raise IndexError('индексы закончились')
 
     # array[lo] это первое вхождение
-    # теперь идем назад чтобы найти все
+    # теперь идем назад чтобы найти все вхождения
     first = lo
     while first > 0 and match_at(array[first - 1]):
         first -= 1
